@@ -1,0 +1,9 @@
+.btnOptions {
+  width: 100px;
+  height: 40px;
+  border-radius: 8px;
+  box-shadow: inset;
+}
+.btnOptions:hover {
+  background-color: #e0e4e4;
+}
