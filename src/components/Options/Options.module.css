@@ -1,3 +1,11 @@
+.optionsContainet {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.defolt {
+  display: none;
+}
 .btnOptions {
   width: 100px;
   height: 40px;

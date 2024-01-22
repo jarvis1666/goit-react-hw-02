@@ -6,7 +6,7 @@ import { Options } from "../Options/Options";
 import { Feedback } from "../Feedback/Feedback";
 
 function App() {
-  const [clicks, setClicks] = useState(() => {
+  const [options, setOptions] = useState(() => {
     const savedClicks = window.localStorage.getItem("saved-clicks");
     if (JSON.parse(savedClicks) !== null) {
       return JSON.parse(savedClicks);
@@ -20,93 +20,56 @@ function App() {
   });
 
   useEffect(() => {
-    window.localStorage.setItem("saved-clicks", JSON.stringify(clicks));
-  }, [clicks]);
+    window.localStorage.setItem("saved-clicks", JSON.stringify(options));
+  }, [options]);
 
   const updateGood = () => {
-    setClicks({
-      ...clicks,
-      good: clicks.good + 1,
+    setOptions({
+      ...options,
+      good: options.good + 1,
     });
   };
   const updateNeutral = () => {
-    setClicks({
-      ...clicks,
-      neutral: clicks.neutral + 1,
+    setOptions({
+      ...options,
+      neutral: options.neutral + 1,
     });
   };
   const updateBad = () => {
-    setClicks({
-      ...clicks,
-      bad: clicks.bad + 1,
+    setOptions({
+      ...options,
+      bad: options.bad + 1,
     });
   };
-  const totalFeedback = clicks.good + clicks.neutral + clicks.bad;
+  const totalFeedback = options.good + options.neutral + options.bad;
   const positive = Math.round(
-    ((clicks.good + clicks.neutral) / totalFeedback) * 100
+    ((options.good + options.neutral) / totalFeedback) * 100
   );
   const resetFunction = () => {
-    setClicks({
+    setOptions({
       good: 0,
       neutral: 0,
       bad: 0,
     });
   };
 
-  if (totalFeedback === 0) {
-    return (
-      <div className={css.container}>
-        <Description></Description>
-        <div className={css.optionsContainet}>
-          <Options
-            name="Good"
-            onUpdate={updateGood}
-            total={totalFeedback}
-          ></Options>
-          <Options
-            name="Neutral"
-            onUpdate={updateNeutral}
-            total={totalFeedback}
-          ></Options>
-          <Options
-            name="Bad"
-            onUpdate={updateBad}
-            total={totalFeedback}
-          ></Options>
-        </div>
-        <Feedback clicks={clicks} total={totalFeedback}></Feedback>
-      </div>
-    );
-  } else {
-    return (
-      <div className={css.container}>
-        <Description></Description>
-        <div className={css.optionsContainet}>
-          <Options
-            name="Good"
-            onUpdate={updateGood}
-            total={totalFeedback}
-          ></Options>
-          <Options
-            name="Neutral"
-            onUpdate={updateNeutral}
-            total={totalFeedback}
-          ></Options>
-          <Options
-            name="Bad"
-            onUpdate={updateBad}
-            total={totalFeedback}
-          ></Options>
-          <Options name="Reset" onUpdate={resetFunction}></Options>
-        </div>
-        <Feedback
-          clicks={clicks}
-          total={totalFeedback}
-          proc={positive}
-        ></Feedback>
-      </div>
-    );
-  }
+  return (
+    <div className={css.container}>
+      <Description></Description>
+      <Options
+        updateBadFun={updateBad}
+        updateNeutralFun={updateNeutral}
+        updateGoodFun={updateGood}
+        updateResetFunction={resetFunction}
+        totalFeedbackValue={totalFeedback}
+      ></Options>
+      <Feedback
+        clicks={options}
+        total={totalFeedback}
+        positiveValue={positive}
+      ></Feedback>
+    </div>
+  );
 }
 
 export default App;

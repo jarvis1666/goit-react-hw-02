@@ -1,7 +1,11 @@
 import { Notification } from "../Notification/Notification";
 import css from "../Feedback/Feedback.module.css";
 
-export const Feedback = ({ clicks: { good, neutral, bad }, total, proc }) => {
+export const Feedback = ({
+  clicks: { good, neutral, bad },
+  total,
+  positiveValue,
+}) => {
   if (total !== 0) {
     return (
       <div>
@@ -9,7 +13,7 @@ export const Feedback = ({ clicks: { good, neutral, bad }, total, proc }) => {
         <p className={css.text}>Neutral: {neutral}</p>
         <p className={css.text}>Bad: {bad}</p>
         <p className={css.text}>Total: {total}</p>
-        <p className={css.text}>Positive: {proc}%</p>
+        <p className={css.text}>Positive: {positiveValue}%</p>
       </div>
     );
   } else {
